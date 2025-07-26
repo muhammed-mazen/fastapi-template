@@ -1,10 +1,5 @@
 # FastAPI Template
 
-
-
-[![pipeline status](https://gitlab.dataplume.com/mh-mazen/fastapi-template/badges/main/pipeline.svg)](https://gitlab.dataplume.com/mh-mazen/fastapi-template/-/commits/main)
-
-
 A lightweight and extensible **FastAPI** template designed for production-ready applications. This template includes:
 
 - Optimized structure for scalability
