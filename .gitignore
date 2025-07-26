@@ -1,0 +1,17 @@
+.env
+.venv
+venv
+db.sqlite
+/users.json
+data/*
+
+__pycache__/
+_.sqlite3
+.idea/legal-review.iml
+.idea/misc.xml
+__pycache__/*
+main.py~
+*~
+profile/*
+/test_users.json
+/pytest-cache-files-884f2wci/

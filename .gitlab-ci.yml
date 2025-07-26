@@ -1,0 +1,56 @@
+stages:
+  - test
+
+variables:
+  APP_ENV: "test"
+  DATABASE_URL: "postgresql+asyncpg://testuser:testpassword@postgres/test_db"
+
+default:
+  image: python:3.11
+  services:
+    - name: postgres:17
+      alias: postgres
+      variables:
+        POSTGRES_DB: test_db
+        POSTGRES_USER: testuser
+        POSTGRES_PASSWORD: testpassword
+
+test:
+  stage: test
+  before_script:
+    - python -m venv venv
+    - source venv/bin/activate
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+
+    - PROJECT_DIR="$CI_PROJECT_DIR"
+    # - TEST_DATA_DIR="$PROJECT_DIR/data/test"
+    # - INSTRUCTIONS_FILE="$PROJECT_DIR/data/instructions.txt"
+
+    # - mkdir -p "$TEST_DATA_DIR"
+
+    # - cp "$PROJECT_DIR/data/instructions.txt" "$INSTRUCTIONS_FILE" || echo "No instructions file found"
+
+    # - ls -la "$PROJECT_DIR/data/"
+
+    - |
+      echo "Waiting for PostgreSQL to be ready..."
+      for i in {1..10}; do
+        pg_isready -h postgres -p 5432 && break
+        echo "PostgreSQL not ready yet, waiting..."
+        sleep 2
+      done
+
+    - alembic upgrade head
+
+  script:
+    - pytest tests/ --maxfail=10 --disable-warnings --junitxml=pytest_report.xml
+
+  artifacts:
+    when: always
+    paths:
+      - pytest_report.xml
+    reports:
+      junit: pytest_report.xml
+
+  retry: 2
