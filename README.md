@@ -14,7 +14,7 @@ A lightweight and extensible **FastAPI** template designed for production-ready 
 ### **1. Clone the Repository**
 
 ```sh
-git clone https://gitlab.com/YOUR_USERNAME/YOUR_PROJECT.git
+git clone https://github.com/YOUR_USERNAME/YOUR_PROJECT.git
 cd YOUR_PROJECT
 ```
 
